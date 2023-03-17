@@ -29,9 +29,9 @@
     "fuzzy-search": "^3.2.1",
     "gemoji": "^8.0.0",
     "lodash": "^4.17.21",
-    "markdown-it": "^12.2.0",
+    "markdown-it": "^13.0.1",
     "markdown-it-container": "^3.0.0",
-    "markdown-it-emoji": "^2.0.0",
+    "markdown-it-emoji": "^2.0.2",
     "outline-icons": "^1.38.1",
     "prosemirror-commands": "^1.5.1",
     "prosemirror-dropcursor": "^1.7.1",
@@ -99,7 +99,6 @@
     "typescript": "4.1.6"
   },
   "resolutions": {
-    "markdown-it": "^12.2.0",
     "yargs-parser": "^15.0.1",
     "@types/react": "^17.0.53",
     "@types/react-dom": "^17.0.19"
