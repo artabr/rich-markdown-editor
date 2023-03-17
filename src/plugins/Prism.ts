@@ -1,6 +1,11 @@
 import refractor from "refractor/core";
 import flattenDeep from "lodash/flattenDeep";
-import { Plugin, PluginKey, Transaction } from "prosemirror-state";
+import {
+  EditorStateConfig,
+  Plugin,
+  PluginKey,
+  Transaction,
+} from "prosemirror-state";
 import { Node } from "prosemirror-model";
 import { Decoration, DecorationSet } from "prosemirror-view";
 import { findBlockNodes } from "prosemirror-utils";
@@ -112,7 +117,7 @@ export default function Prism({ name }) {
   return new Plugin({
     key: new PluginKey("prism"),
     state: {
-      init: (_: Plugin, { doc }) => {
+      init: (config: EditorStateConfig, { doc }) => {
         return DecorationSet.create(doc, []);
       },
       apply: (transaction: Transaction, decorationSet, oldState, state) => {

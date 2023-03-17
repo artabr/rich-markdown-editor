@@ -38,12 +38,13 @@ export class MarkdownSerializer {
   // outside the marks. This is necessary for emphasis marks as
   // CommonMark does not permit enclosing whitespace inside emphasis
   // marks, see: http://spec.commonmark.org/0.26/#example-330
-  constructor(nodes, marks) {
+  constructor(nodes, marks, options) {
     // :: Object<(MarkdownSerializerState, Node)> The node serializer
     // functions for this serializer.
     this.nodes = nodes;
     // :: Object The mark serializer info.
     this.marks = marks;
+    this.options = options;
   }
 
   // :: (Node, ?Object) → string
