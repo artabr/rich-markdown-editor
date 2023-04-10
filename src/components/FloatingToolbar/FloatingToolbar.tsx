@@ -4,7 +4,9 @@ import { EditorView } from "prosemirror-view";
 import useComponentSize from "../../hooks/useComponentSize";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import useViewportHeight from "../../hooks/useViewportHeight";
-import styled from "styled-components";
+import cx from "classnames";
+
+import css from "./FloatingToolbar.module.scss";
 
 const SSR = typeof window === "undefined";
 
@@ -163,84 +165,21 @@ function FloatingToolbarComponent(props) {
   // to prevent gaining input focus before calculatePosition runs
   return (
     <Portal>
-      <Wrapper
-        active={props.active && position.visible}
+      <div
+        className={cx(css.wrapper, { [css.active]: props.active })}
         ref={menuRef}
-        offset={position.offset}
+        // TODO: fix pseudo element positioning
+        // offset={position.offset}
         style={{
           top: `${position.top}px`,
           left: `${position.left}px`,
         }}
       >
         {position.visible && props.children}
-      </Wrapper>
+      </div>
     </Portal>
   );
 }
-
-const Wrapper = styled.div<{
-  active?: boolean;
-  offset: number;
-}>`
-  will-change: opacity, transform;
-  padding: 8px 16px;
-  position: absolute;
-  z-index: ${props => props.theme.zIndex + 100};
-  opacity: 0;
-  background-color: ${props => props.theme.toolbarBackground};
-  border-radius: 4px;
-  transform: scale(0.95);
-  transition: opacity 150ms cubic-bezier(0.175, 0.885, 0.32, 1.275),
-    transform 150ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  transition-delay: 150ms;
-  line-height: 0;
-  height: 40px;
-  box-sizing: border-box;
-  pointer-events: none;
-  white-space: nowrap;
-
-  &::before {
-    content: "";
-    display: block;
-    width: 24px;
-    height: 24px;
-    transform: translateX(-50%) rotate(45deg);
-    background: ${props => props.theme.toolbarBackground};
-    border-radius: 3px;
-    z-index: -1;
-    position: absolute;
-    bottom: -2px;
-    left: calc(50% - ${props => props.offset || 0}px);
-    pointer-events: none;
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  ${({ active }) =>
-    active &&
-    `
-    transform: translateY(-6px) scale(1);
-    opacity: 1;
-  `};
-
-  @media print {
-    display: none;
-  }
-
-  @media (hover: none) and (pointer: coarse) {
-    &:before {
-      display: none;
-    }
-
-    transition: opacity 150ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    transform: scale(1);
-    border-radius: 0;
-    width: 100vw;
-    position: fixed;
-  }
-`;
 
 export const FloatingToolbar = React.forwardRef(
   function FloatingToolbarWithForwardedRef(

@@ -1,10 +1,8 @@
 import * as React from "react";
 import { BlockMenuItem, Props as BlockMenuItemProps } from "../BlockMenuItem";
-import styled from "styled-components";
+import cx from "classnames";
 
-const Emoji = styled.span`
-  font-size: 16px;
-`;
+import css from "./EmojiMenuItem.module.scss";
 
 const EmojiTitle = ({
   emoji,
@@ -15,7 +13,7 @@ const EmojiTitle = ({
 }) => {
   return (
     <p>
-      <Emoji className="emoji">{emoji}</Emoji>
+      <span className={cx(css.emoji, "emoji")}>{emoji}</span>
       &nbsp;&nbsp;
       {title}
     </p>

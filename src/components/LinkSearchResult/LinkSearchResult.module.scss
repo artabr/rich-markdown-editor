@@ -1,0 +1,46 @@
+@import '../../styles/theme.scss';
+
+.iconWrapper {
+  flex-shrink: 0;
+  margin-right: 4px;
+  opacity: 0.8;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.subtitle {
+  font-size: 13px;
+  opacity: 0.5;
+
+  &.selected {
+    opacity: 0.75;
+  }
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-radius: 2px;
+  color: $toolbarItem;
+  font-family: $fontFamily;
+  text-decoration: none;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  line-height: 1.2;
+  background: transparent;
+
+  &.compact {
+    line-height: inherit;
+    height: 28px;
+  }
+
+  &.selected {
+    background: $toolbarHoverBackground;
+  }
+}

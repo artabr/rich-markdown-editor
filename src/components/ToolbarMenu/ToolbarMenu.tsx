@@ -1,10 +1,11 @@
 import * as React from "react";
 import { EditorView } from "prosemirror-view";
-import styled, { withTheme } from "styled-components";
 import { ToolbarButton } from "../ToolbarButton";
 import { ToolbarSeparator } from "../ToolbarSeparator";
 import theme from "../../styles/theme";
 import { MenuItem } from "../../types";
+
+import css from "./ToolbarMenu.module.scss";
 
 type Props = {
   tooltip: typeof React.Component | React.FC<any>;
@@ -14,18 +15,14 @@ type Props = {
   items: MenuItem[];
 };
 
-const FlexibleWrapper = styled.div`
-  display: flex;
-`;
-
-export class ToolbarMenuComponent extends React.Component<Props> {
+export class ToolbarMenu extends React.Component<Props> {
   render() {
     const { view, items } = this.props;
     const { state } = view;
     const Tooltip = this.props.tooltip;
 
     return (
-      <FlexibleWrapper>
+      <div className={css.wrapper}>
         {items.map((item, index) => {
           if (item.name === "separator" && item.visible !== false) {
             return <ToolbarSeparator key={index} />;
@@ -50,9 +47,7 @@ export class ToolbarMenuComponent extends React.Component<Props> {
             </ToolbarButton>
           );
         })}
-      </FlexibleWrapper>
+      </div>
     );
   }
 }
-
-export const ToolbarMenu = withTheme(ToolbarMenuComponent);

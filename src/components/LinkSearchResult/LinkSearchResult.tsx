@@ -1,6 +1,8 @@
 import * as React from "react";
 import scrollIntoView from "smooth-scroll-into-view-if-needed";
-import styled from "styled-components";
+import cx from "classnames";
+
+import css from "./LinkSearchResult.module.scss";
 
 type Props = {
   onClick: (event: React.MouseEvent) => void;
@@ -37,51 +39,23 @@ export function LinkSearchResult({
   );
 
   return (
-    <ListItem ref={ref} compact={!subtitle} selected={selected} {...rest}>
-      <IconWrapper>{icon}</IconWrapper>
+    <li
+      className={cx(css.listItem, {
+        [css.compact]: !subtitle,
+        [css.selected]: selected,
+      })}
+      ref={ref}
+      {...rest}
+    >
+      <span className={css.iconWrapper}>{icon}</span>
       <div>
-        <Title>{title}</Title>
-        {subtitle ? <Subtitle selected={selected}>{subtitle}</Subtitle> : null}
+        <div className={css.title}>{title}</div>
+        {subtitle ? (
+          <div className={cx(css.subtitle, { [css.selected]: selected })}>
+            {subtitle}
+          </div>
+        ) : null}
       </div>
-    </ListItem>
+    </li>
   );
 }
-
-const IconWrapper = styled.span`
-  flex-shrink: 0;
-  margin-right: 4px;
-  opacity: 0.8;
-`;
-
-const ListItem = styled.li<{
-  selected: boolean;
-  compact: boolean;
-}>`
-  display: flex;
-  align-items: center;
-  padding: 8px;
-  border-radius: 2px;
-  color: ${props => props.theme.toolbarItem};
-  background: ${props =>
-    props.selected ? props.theme.toolbarHoverBackground : "transparent"};
-  font-family: ${props => props.theme.fontFamily};
-  text-decoration: none;
-  overflow: hidden;
-  white-space: nowrap;
-  cursor: pointer;
-  user-select: none;
-  line-height: ${props => (props.compact ? "inherit" : "1.2")};
-  height: ${props => (props.compact ? "28px" : "auto")};
-`;
-
-const Title = styled.div`
-  font-size: 14px;
-  font-weight: 500;
-`;
-
-const Subtitle = styled.div<{
-  selected: boolean;
-}>`
-  font-size: 13px;
-  opacity: ${props => (props.selected ? 0.75 : 0.5)};
-`;

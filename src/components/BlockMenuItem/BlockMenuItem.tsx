@@ -9,7 +9,6 @@ export type Props = {
   selected: boolean;
   disabled?: boolean;
   onClick: () => void;
-  theme: typeof theme;
   icon?: typeof React.Component | React.FC<any>;
   title: React.ReactNode;
   shortcut?: string;

@@ -9,14 +9,13 @@ import {
   TrashIcon,
   OpenIcon,
 } from "outline-icons";
-import styled, { withTheme } from "styled-components";
 import isUrl from "../../lib/isUrl";
 import theme from "../../styles/theme";
-import { Flex } from "../Flex";
-import { Input } from "../Input";
 import { ToolbarButton } from "../ToolbarButton";
 import { LinkSearchResult } from "../LinkSearchResult";
 import baseDictionary from "../../dictionary";
+
+import css from "./LinkEditor.module.scss";
 
 export type SearchResult = {
   title: string;
@@ -54,7 +53,7 @@ type State = {
   selectedIndex: number;
 };
 
-class LinkEditorComponent extends React.Component<Props, State> {
+export class LinkEditor extends React.Component<Props, State> {
   discardInputValue = false;
   initialValue = this.href;
   initialSelectionLength = this.props.to - this.props.from;
@@ -296,8 +295,9 @@ class LinkEditorComponent extends React.Component<Props, State> {
       !!suggestedLinkTitle && (showCreateLink || results.length > 0);
 
     return (
-      <Wrapper>
-        <Input
+      <div className={css.wrapper}>
+        <input
+          className={css.input}
           value={value}
           placeholder={
             showCreateLink
@@ -326,7 +326,7 @@ class LinkEditorComponent extends React.Component<Props, State> {
         </ToolbarButton>
 
         {showResults && (
-          <SearchResults id="link-search-results">
+          <ol className={css.searchResults} id="link-search-results">
             {results.map((result, index) => (
               <LinkSearchResult
                 key={result.url}
@@ -356,43 +356,9 @@ class LinkEditorComponent extends React.Component<Props, State> {
                 selected={results.length === selectedIndex}
               />
             )}
-          </SearchResults>
+          </ol>
         )}
-      </Wrapper>
+      </div>
     );
   }
 }
-
-const Wrapper = styled(Flex)`
-  margin-left: -8px;
-  margin-right: -8px;
-  min-width: 336px;
-  pointer-events: all;
-`;
-
-const SearchResults = styled.ol`
-  background: ${props => props.theme.toolbarBackground};
-  position: absolute;
-  top: 100%;
-  width: 100%;
-  height: auto;
-  left: 0;
-  padding: 4px 8px 8px;
-  margin: 0;
-  margin-top: -3px;
-  margin-bottom: 0;
-  border-radius: 0 0 4px 4px;
-  overflow-y: auto;
-  max-height: 25vh;
-
-  @media (hover: none) and (pointer: coarse) {
-    position: fixed;
-    top: auto;
-    bottom: 40px;
-    border-radius: 0;
-    max-height: 50vh;
-    padding: 8px 8px 4px;
-  }
-`;
-
-export const LinkEditor = withTheme(LinkEditorComponent);

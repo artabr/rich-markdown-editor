@@ -1,9 +1,7 @@
 import * as React from "react";
-import { DownloadIcon } from "outline-icons";
 import { Plugin, TextSelection, NodeSelection } from "prosemirror-state";
 import { InputRule } from "prosemirror-inputrules";
-import styled from "styled-components";
-import ImageZoom from "react-medium-image-zoom";
+import { Image as ImageComponent } from "../components/Image";
 import getDataTransferFiles from "../lib/getDataTransferFiles";
 import uploadPlaceholderPlugin from "../lib/uploadPlaceholder";
 import insertFiles from "../commands/insertFiles";
@@ -248,52 +246,16 @@ export default class Image extends Node {
     downloadImageNode(node);
   };
 
-  component = props => {
-    const { theme, isSelected } = props;
-    const { alt, src, title, layoutClass } = props.node.attrs;
-    const className = layoutClass ? `image image-${layoutClass}` : "image";
-
-    return (
-      <div contentEditable={false} className={className}>
-        <ImageWrapper
-          className={isSelected ? "ProseMirror-selectednode" : ""}
-          onClick={this.handleSelect(props)}
-        >
-          <Button>
-            <DownloadIcon
-              color="currentColor"
-              onClick={this.handleDownload(props)}
-            />
-          </Button>
-          <ImageZoom
-            image={{
-              src,
-              alt,
-              title,
-            }}
-            defaultStyles={{
-              overlay: {
-                backgroundColor: theme.background,
-              },
-            }}
-            shouldRespectMaxDimension
-          />
-        </ImageWrapper>
-        <Caption
-          onKeyDown={this.handleKeyDown(props)}
-          onBlur={this.handleBlur(props)}
-          className="caption"
-          tabIndex={-1}
-          role="textbox"
-          contentEditable
-          suppressContentEditableWarning
-          data-caption={this.options.dictionary.imageCaptionPlaceholder}
-        >
-          {alt}
-        </Caption>
-      </div>
-    );
-  };
+  component = props => (
+    <ImageComponent
+      handleDownload={this.handleDownload(props)}
+      handleBlur={this.handleBlur(props)}
+      handleKeyDown={this.handleKeyDown(props)}
+      handleSelect={this.handleSelect(props)}
+      imageCaptionPlaceholder={this.options.dictionary.imageCaptionPlaceholder}
+      {...props}
+    />
+  );
 
   toMarkdown(state, node) {
     let markdown =
@@ -436,74 +398,3 @@ export default class Image extends Node {
     return [uploadPlaceholderPlugin, uploadPlugin(this.options)];
   }
 }
-
-const Button = styled.button`
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  border: 0;
-  margin: 0;
-  padding: 0;
-  border-radius: 4px;
-  background: ${props => props.theme.background};
-  color: ${props => props.theme.textSecondary};
-  width: 24px;
-  height: 24px;
-  display: inline-block;
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity 100ms ease-in-out;
-
-  &:active {
-    transform: scale(0.98);
-  }
-
-  &:hover {
-    color: ${props => props.theme.text};
-    opacity: 1;
-  }
-`;
-
-const Caption = styled.p`
-  border: 0;
-  display: block;
-  font-size: 13px;
-  font-style: italic;
-  font-weight: normal;
-  color: ${props => props.theme.textSecondary};
-  padding: 2px 0;
-  line-height: 16px;
-  text-align: center;
-  min-height: 1em;
-  outline: none;
-  background: none;
-  resize: none;
-  user-select: text;
-  cursor: text;
-
-  &:empty:not(:focus) {
-    visibility: hidden;
-  }
-
-  &:empty:before {
-    color: ${props => props.theme.placeholder};
-    content: attr(data-caption);
-    pointer-events: none;
-  }
-`;
-
-const ImageWrapper = styled.span`
-  line-height: 0;
-  display: inline-block;
-  position: relative;
-
-  &:hover {
-    ${Button} {
-      opacity: 0.9;
-    }
-  }
-
-  &.ProseMirror-selectednode + ${Caption} {
-    visibility: visible;
-  }
-`;
