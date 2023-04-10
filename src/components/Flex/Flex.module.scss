@@ -1,0 +1,14 @@
+@import '../../styles/theme.scss';
+
+.flex {
+  display: flex;
+  flex-direction: row;
+
+  &.column {
+    flex-direction: column;
+  }
+
+  &.auto {
+    flex: 1 1 auto;
+  }
+}
