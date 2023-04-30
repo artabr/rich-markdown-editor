@@ -1,5 +1,3 @@
-@use "sass:map";
-
 $almostBlack: #181A1B;
 $lightBlack: #2F3336;
 $almostWhite: #E6E6E6;
@@ -12,8 +10,6 @@ $greyLight: #F4F7FA;
 $grey: #E8EBED;
 $greyMid: #C5CCD3;
 $greyDark: #DAE1E9;
-
-$dark-theme: false !default;
 
 $fontFamily:
   -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen, Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif;
@@ -88,28 +84,26 @@ $imageErrorBackground: $greyLight !default;
 $scrollbarBackground: $greyLight !default;
 $scrollbarThumb: $greyMid !default;
 
-@if $dark-theme {
-  $background: $almostBlack;
-  $text: $almostWhite;
-  $code: $almostWhite;
-  $cursor: $white;
-  $divider: #4E5C6E;
-  $placeholder: #52657A;
+$backgroundDark: $almostBlack;
+$textDark: $almostWhite;
+$codeDark: $almostWhite;
+$cursorDark: $white;
+$dividerDark: #4E5C6E;
+$placeholderDark: #52657A;
 
-  $toolbarBackground: $white;
-  $toolbarHoverBackground: $greyMid;
-  $toolbarInput: $black10;
-  $toolbarItem: $lightBlack;
+$toolbarBackgroundDark: $white;
+$toolbarHoverBackgroundDark: $greyMid;
+$toolbarInputDark: $black10;
+$toolbarItemDark: $lightBlack;
 
-  $tableDivider: $lightBlack;
-  $tableSelectedBackground: #002333;
+$tableDividerDark: $lightBlack;
+$tableSelectedBackgroundDark: #002333;
 
-  $codeBackground: $black;
-  $codeBorder: $lightBlack;
-  $codeString: #3d8fd1;
-  $horizontalRule: $lightBlack;
-  $imageErrorBackground: rgba(0, 0, 0, 0.5);
+$codeBackgroundDark: $black;
+$codeBorderDark: $lightBlack;
+$codeStringDark: #3d8fd1;
+$horizontalRuleDark: $lightBlack;
+$imageErrorBackgroundDark: rgba(0, 0, 0, 0.5);
 
-  $scrollbarBackground: $black;
-  $scrollbarThumb: $lightBlack;
-}
+$scrollbarBackgroundDark: $black;
+$scrollbarThumbDark: $lightBlack;

@@ -11,7 +11,6 @@ import { inputRules, InputRule } from "prosemirror-inputrules";
 import { keymap } from "prosemirror-keymap";
 import { baseKeymap } from "prosemirror-commands";
 import { selectColumn, selectRow, selectTable } from "prosemirror-utils";
-import { light as lightTheme, dark as darkTheme } from "./styles/theme";
 import baseDictionary from "./dictionary";
 import { Flex } from "./components/Flex";
 import { SearchResult } from "./components/LinkEditor";
@@ -82,8 +81,6 @@ export { schema, parser, serializer, renderToHtml } from "./server";
 
 export { default as Extension } from "./lib/Extension";
 
-export const theme = lightTheme;
-
 export type Props = {
   id?: string;
   value?: string;
@@ -126,7 +123,6 @@ export type Props = {
   dictionary?: Partial<typeof baseDictionary>;
   dark?: boolean;
   dir?: string;
-  theme?: typeof theme;
   template?: boolean;
   headingsOffset?: number;
   maxLength?: number;
@@ -507,7 +503,7 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
       plugins: [
         ...this.plugins,
         ...this.keymaps,
-        dropCursor({ color: this.theme().cursor }),
+        dropCursor({ color: this.props.dark ? "#fff" : "#000" }),
         gapCursor(),
         inputRules({
           rules: this.inputRules,
@@ -717,10 +713,6 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
     return headings;
   };
 
-  theme = () => {
-    return this.props.theme || (this.props.dark ? darkTheme : lightTheme);
-  };
-
   dictionary = memoize(
     (providedDictionary?: Partial<typeof baseDictionary>) => {
       return { ...baseDictionary, ...providedDictionary };
@@ -736,6 +728,7 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
       tooltip,
       className,
       onKeyDown,
+      dark,
     } = this.props;
     const { isRTL } = this.state;
     const dictionary = this.dictionary(this.props.dictionary);
@@ -756,6 +749,7 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
               ["rtl"]: isRTL,
               ["readOnly"]: readOnly,
               ["notReadOnlyWriteCheckboxes"]: !readOnlyWriteCheckboxes,
+              ["dark"]: dark,
             })}
             ref={ref => (this.element = ref)}
           ></div>

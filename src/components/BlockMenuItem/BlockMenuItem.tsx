@@ -78,6 +78,7 @@ const MenuItemComponent = (props, ref) => {
       className={cx(css.menuItemButton, {
         [css.selected]: props.selected,
       })}
+      onClick={props.onClick}
     >
       {props.children}
     </button>

@@ -1,0 +1,137 @@
+@mixin dark {
+  color: $textDark;
+  background: $backgroundDark;
+
+  .image.placeholder {
+    background: $backgroundDark;
+  }
+
+  .heading-name {
+    color: $textDark;
+  }
+
+  .heading-anchor,
+  .heading-fold {
+    color: $textDark;
+  }
+
+  .heading-actions {
+    background: $backgroundDark;
+  }
+
+  .placeholder:before {
+    color: $placeholderDark;
+  }
+
+  .template-placeholder {
+    color: $placeholderDark;
+    border-bottom: 1px dotted $placeholderDark;
+  }
+
+  hr:before {
+    border-top: 1px solid $horizontalRuleDark;
+  }
+
+  hr.page-break:before {
+    border-top: 1px dashed $horizontalRuleDark;
+  }
+
+  code {
+    border: 1px solid $codeBorderDark;
+    background: $codeBackgroundDark;
+  }
+
+  pre {
+    background: $codeBackgroundDark;
+    border: 1px solid $codeBorderDark;
+    color: $codeDark;
+  }
+
+  .token.string {
+    color: $codeStringDark;
+  }
+
+  table {
+    tr {
+      border-bottom: 1px solid $tableDividerDark;
+    }
+
+    td,
+    th {
+      border: 1px solid $tableDividerDark;
+    }
+
+    .selectedCell {
+      background: $tableSelectedBackgroundDark;
+    }
+
+    .grip-column {
+      &::after {
+        background: $tableDividerDark;
+        border-bottom: 3px solid $backgroundDark;
+      }
+
+      &:hover::after {
+        background: $textDark;
+      }
+    }
+
+    .grip-row {
+      &::after {
+        background: $tableDividerDark;
+        border-color: $backgroundDark;
+      }
+
+      &:hover::after {
+        background: $textDark;
+      }
+    }
+
+    .grip-table {
+      &::after {
+        background: $tableDividerDark;
+        border: 2px solid $backgroundDark;
+      }
+
+      &:hover::after {
+        background: $textDark;
+      }
+    }
+  }
+
+  .scrollable-wrapper {
+    &:hover {
+      scrollbar-color: $scrollbarThumbDark $scrollbarBackgroundDark;
+    }
+
+    &:hover ::-webkit-scrollbar {
+      background-color: $scrollbarBackgroundDark;
+    }
+
+    &:hover ::-webkit-scrollbar-thumb {
+      background-color: $scrollbarThumbDark;
+      border-color: $scrollbarBackgroundDark;
+    }
+  }
+
+  .scrollable-shadow {
+    &.left {
+      border-left: 1em solid $backgroundDark;
+    }
+  }
+
+  .block-menu-trigger {
+    &:hover,
+    &:focus {
+      color: $textDark;
+    }
+  }
+
+  &.readOnly {
+    .template-placeholder {
+      &:hover {
+        border-bottom: 1px dotted $placeholderDark;
+      }
+    }
+  }
+}
