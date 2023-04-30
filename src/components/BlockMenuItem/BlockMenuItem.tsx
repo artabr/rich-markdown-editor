@@ -69,13 +69,12 @@ export const BlockMenuItem = ({
 type MenuItemProps = {
   selected: boolean;
   onClick?: () => void;
-  ref?: React.Ref<HTMLButtonElement>;
 };
 
-const MenuItem = (props: React.PropsWithChildren<MenuItemProps>) => {
+const MenuItemComponent = (props, ref) => {
   return (
     <button
-      ref={props.ref}
+      ref={ref}
       className={cx(css.menuItemButton, {
         [css.selected]: props.selected,
       })}
@@ -84,6 +83,11 @@ const MenuItem = (props: React.PropsWithChildren<MenuItemProps>) => {
     </button>
   );
 };
+
+const MenuItem = React.forwardRef<
+  HTMLButtonElement,
+  React.PropsWithChildren<MenuItemProps>
+>(MenuItemComponent);
 
 const Shortcut: React.FC = props => {
   return <span className={css.shortcut}>{props.children}</span>;

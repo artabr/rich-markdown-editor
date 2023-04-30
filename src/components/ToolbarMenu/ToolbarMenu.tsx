@@ -2,7 +2,6 @@ import * as React from "react";
 import { EditorView } from "prosemirror-view";
 import { ToolbarButton } from "../ToolbarButton";
 import { ToolbarSeparator } from "../ToolbarSeparator";
-import theme from "../../styles/theme";
 import { MenuItem } from "../../types";
 
 import css from "./ToolbarMenu.module.scss";
@@ -11,7 +10,6 @@ type Props = {
   tooltip: typeof React.Component | React.FC<any>;
   commands: Record<string, any>;
   view: EditorView;
-  theme: typeof theme;
   items: MenuItem[];
 };
 
@@ -42,7 +40,7 @@ export class ToolbarMenu extends React.Component<Props> {
               active={isActive}
             >
               <Tooltip tooltip={item.tooltip} placement="top">
-                <Icon color={this.props.theme.toolbarItem} />
+                <Icon className={css.icon} />
               </Tooltip>
             </ToolbarButton>
           );

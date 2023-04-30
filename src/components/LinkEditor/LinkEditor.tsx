@@ -10,7 +10,6 @@ import {
   OpenIcon,
 } from "outline-icons";
 import isUrl from "../../lib/isUrl";
-import theme from "../../styles/theme";
 import { ToolbarButton } from "../ToolbarButton";
 import { LinkSearchResult } from "../LinkSearchResult";
 import baseDictionary from "../../dictionary";
@@ -41,7 +40,6 @@ type Props = {
   onClickLink: (href: string, event: MouseEvent) => void;
   onShowToast?: (message: string, code: string) => void;
   view: EditorView;
-  theme: typeof theme;
 };
 
 type State = {
@@ -273,7 +271,7 @@ export class LinkEditor extends React.Component<Props, State> {
   };
 
   render() {
-    const { dictionary, theme } = this.props;
+    const { dictionary } = this.props;
     const { value, selectedIndex } = this.state;
     const results =
       this.state.results[value.trim()] ||
@@ -312,15 +310,15 @@ export class LinkEditor extends React.Component<Props, State> {
 
         <ToolbarButton onClick={this.handleOpenLink} disabled={!value}>
           <Tooltip tooltip={dictionary.openLink} placement="top">
-            <OpenIcon color={theme.toolbarItem} />
+            <OpenIcon className={css.openIcon} />
           </Tooltip>
         </ToolbarButton>
         <ToolbarButton onClick={this.handleRemoveLink}>
           <Tooltip tooltip={dictionary.removeLink} placement="top">
             {this.initialValue ? (
-              <TrashIcon color={theme.toolbarItem} />
+              <TrashIcon className={css.trashIcon} />
             ) : (
-              <CloseIcon color={theme.toolbarItem} />
+              <CloseIcon className={css.closeIcon} />
             )}
           </Tooltip>
         </ToolbarButton>
@@ -332,7 +330,7 @@ export class LinkEditor extends React.Component<Props, State> {
                 key={result.url}
                 title={result.title}
                 subtitle={result.subtitle}
-                icon={<DocumentIcon color={theme.toolbarItem} />}
+                icon={<DocumentIcon className={css.documentIcon} />}
                 onMouseOver={() => this.handleFocusLink(index)}
                 onClick={this.handleSelectLink(result.url, result.title)}
                 selected={index === selectedIndex}
@@ -344,7 +342,7 @@ export class LinkEditor extends React.Component<Props, State> {
                 key="create"
                 title={suggestedLinkTitle}
                 subtitle={dictionary.createNewDoc}
-                icon={<PlusIcon color={theme.toolbarItem} />}
+                icon={<PlusIcon className={css.plusIcon} />}
                 onMouseOver={() => this.handleFocusLink(results.length)}
                 onClick={() => {
                   this.handleCreateLink(suggestedLinkTitle);

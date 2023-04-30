@@ -100,7 +100,7 @@ function usePosition({ menuRef, isSelectingText, props }) {
       visible: true,
     };
   } else {
-    // calcluate the horizontal center of the selection
+    // calculate the horizontal center of the selection
     const halfSelection =
       Math.abs(selectionBounds.right - selectionBounds.left) / 2;
     const centerOfSelection = selectionBounds.left + halfSelection;

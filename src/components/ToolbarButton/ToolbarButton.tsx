@@ -4,7 +4,11 @@ import css from "./ToolbarButton.module.scss";
 
 import cx from "classnames";
 
-type Props = { active?: boolean; disabled?: boolean; onClick?: () => void };
+type Props = {
+  active?: boolean;
+  disabled?: boolean;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+};
 
 export const ToolbarButton = (props: React.PropsWithChildren<Props>) => {
   const { active, disabled, onClick } = props;
