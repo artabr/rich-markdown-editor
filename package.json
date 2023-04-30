@@ -13,7 +13,8 @@
     "build": "tsc",
     "preversion": "yarn build",
     "watch": "yarn tsc-watch",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "test:screenshot": "build-storybook && percy storybook ./storybook-static"
   },
   "serve": {
     "open": true,
@@ -64,6 +65,8 @@
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.14.5",
     "@babel/preset-typescript": "^7.12.7",
+    "@percy/cli": "^1.24.0",
+    "@percy/storybook": "^4.3.6",
     "@storybook/addon-actions": "^6.4.9",
     "@storybook/addon-essentials": "^6.4.9",
     "@storybook/addon-links": "^6.4.9",
