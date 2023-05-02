@@ -1,5 +1,6 @@
 import path from "path";
 import { defineConfig } from "vite";
+import dts from "vite-plugin-dts";
 
 const fileName = {
   es: `index.mjs`,
@@ -18,5 +19,14 @@ module.exports = defineConfig({
       formats,
       fileName: format => fileName[format],
     },
+    rollupOptions: {
+      external: ["react"],
+      output: {
+        globals: {
+          react: "React",
+        },
+      },
+    },
   },
+  plugins: [dts()],
 });
