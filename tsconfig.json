@@ -6,6 +6,7 @@
     "noImplicitAny": false,
     "esModuleInterop": true,
     "allowJs": true,
+    "noEmit": true,
     "resolveJsonModule": true,
     "module": "commonjs",
     "target": "es2017",
@@ -13,7 +14,8 @@
     "jsx": "react",
     "types": [
       "react",
-      "jest"
+      "jest",
+      "vite/client",
     ],
     "rootDir": "src",
     "outDir": "dist",

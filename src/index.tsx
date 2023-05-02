@@ -742,7 +742,7 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
       >
         <React.Fragment>
           <div
-            className={cx(css.editor, "editor", {
+            className={cx("editor", {
               ["rtl"]: isRTL,
               ["readOnly"]: readOnly,
               ["notReadOnlyWriteCheckboxes"]: !readOnlyWriteCheckboxes,
