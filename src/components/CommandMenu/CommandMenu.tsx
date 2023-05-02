@@ -1,6 +1,5 @@
 import * as React from "react";
 import capitalize from "lodash/capitalize";
-import { Portal } from "react-portal";
 import { EditorView } from "prosemirror-view";
 import { findDomRefAtPos, findParentNode } from "prosemirror-utils";
 import { EmbedDescriptor, MenuItem, ToastType } from "../../types";
@@ -12,6 +11,7 @@ import baseDictionary from "../../dictionary";
 
 import css from "./CommandMenu.module.scss";
 import cx from "classnames";
+import { createPortal } from "react-dom";
 
 const SSR = typeof window === "undefined";
 
@@ -464,80 +464,84 @@ export class CommandMenu<T = MenuItem> extends React.Component<
     const { insertItem, ...positioning } = this.state;
 
     return (
-      <Portal>
-        <div
-          // TODO: remove this inline style
-          style={{
-            top: positioning.top,
-            bottom: positioning.bottom,
-            left: positioning.left,
-          }}
-          className={cx(css.wrapper, {
-            [css.active]: isActive,
-            [css.above]: positioning.isAbove,
-          })}
-          id={this.props.id || "block-menu-container"}
-          ref={this.menuRef}
-        >
-          {insertItem ? (
-            <div className={css.linkInputWrapper}>
-              <input
-                className={css.linkInput}
-                type="text"
-                placeholder={
-                  insertItem.title
-                    ? dictionary.pasteLinkWithTitle(insertItem.title)
-                    : dictionary.pasteLink
-                }
-                onKeyDown={this.handleLinkInputKeydown}
-                onPaste={this.handleLinkInputPaste}
-                autoFocus
-              />
-            </div>
-          ) : (
-            <ol className={css.list}>
-              {items.map((item, index) => {
-                if (item.name === "separator") {
+      <>
+        {createPortal(
+          <div
+            // TODO: remove this inline style
+            style={{
+              top: positioning.top,
+              bottom: positioning.bottom,
+              left: positioning.left,
+            }}
+            className={cx(css.wrapper, {
+              [css.active]: isActive,
+              [css.above]: positioning.isAbove,
+            })}
+            id={this.props.id || "block-menu-container"}
+            ref={this.menuRef}
+          >
+            {insertItem ? (
+              <div className={css.linkInputWrapper}>
+                <input
+                  className={css.linkInput}
+                  type="text"
+                  placeholder={
+                    insertItem.title
+                      ? dictionary.pasteLinkWithTitle(insertItem.title)
+                      : dictionary.pasteLink
+                  }
+                  onKeyDown={this.handleLinkInputKeydown}
+                  onPaste={this.handleLinkInputPaste}
+                  autoFocus
+                />
+              </div>
+            ) : (
+              <ol className={css.list}>
+                {items.map((item, index) => {
+                  if (item.name === "separator") {
+                    return (
+                      <li className={css.listItem} key={index}>
+                        <hr />
+                      </li>
+                    );
+                  }
+                  const selected =
+                    index === this.state.selectedIndex && isActive;
+
+                  if (!item.title) {
+                    return null;
+                  }
+
                   return (
                     <li className={css.listItem} key={index}>
-                      <hr />
+                      {this.props.renderMenuItem(item as any, index, {
+                        selected,
+                        onClick: () => this.insertItem(item),
+                      })}
                     </li>
                   );
-                }
-                const selected = index === this.state.selectedIndex && isActive;
-
-                if (!item.title) {
-                  return null;
-                }
-
-                return (
-                  <li className={css.listItem} key={index}>
-                    {this.props.renderMenuItem(item as any, index, {
-                      selected,
-                      onClick: () => this.insertItem(item),
-                    })}
+                })}
+                {items.length === 0 && (
+                  <li className={css.listItem}>
+                    <div className={css.empty}>{dictionary.noResults}</div>
                   </li>
-                );
-              })}
-              {items.length === 0 && (
-                <li className={css.listItem}>
-                  <div className={css.empty}>{dictionary.noResults}</div>
-                </li>
-              )}
-            </ol>
-          )}
-          {uploadImage && (
-            <VisuallyHidden>
-              <input
-                type="file"
-                ref={this.inputRef}
-                onChange={this.handleImagePicked}
-                accept="image/*"
-              />
-            </VisuallyHidden>
-          )}
-        </div>
-      </Portal>
+                )}
+              </ol>
+            )}
+            {uploadImage && (
+              <VisuallyHidden>
+                <input
+                  type="file"
+                  ref={this.inputRef}
+                  onChange={this.handleImagePicked}
+                  accept="image/*"
+                />
+              </VisuallyHidden>
+            )}
+          </div>,
+          document.body
+        )}
+      </>
     );
   }
 }

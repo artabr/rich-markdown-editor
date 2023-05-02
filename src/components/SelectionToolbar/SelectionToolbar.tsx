@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Portal } from "react-portal";
 import some from "lodash/some";
 import { EditorView } from "prosemirror-view";
 import { TextSelection } from "prosemirror-state";
@@ -21,6 +20,7 @@ import getRowIndex from "../../queries/getRowIndex";
 import createAndInsertLink from "../../commands/createAndInsertLink";
 import { MenuItem } from "../../types";
 import baseDictionary from "../../dictionary";
+import { createPortal } from "react-dom";
 
 type Props = {
   dictionary: typeof baseDictionary;
@@ -219,27 +219,32 @@ export class SelectionToolbar extends React.Component<Props> {
     }
 
     return (
-      <Portal>
-        <FloatingToolbar
-          view={view}
-          active={isVisible(this.props)}
-          ref={this.menuRef}
-        >
-          {link && range ? (
-            <LinkEditor
-              dictionary={dictionary}
-              mark={range.mark}
-              from={range.from}
-              to={range.to}
-              onCreateLink={onCreateLink ? this.handleOnCreateLink : undefined}
-              onSelectLink={this.handleOnSelectLink}
-              {...rest}
-            />
-          ) : (
-            <ToolbarMenu items={items} {...rest} />
-          )}
-        </FloatingToolbar>
-      </Portal>
+      <>
+        {createPortal(
+          <FloatingToolbar
+            view={view}
+            active={isVisible(this.props)}
+            ref={this.menuRef}
+          >
+            {link && range ? (
+              <LinkEditor
+                dictionary={dictionary}
+                mark={range.mark}
+                from={range.from}
+                to={range.to}
+                onCreateLink={
+                  onCreateLink ? this.handleOnCreateLink : undefined
+                }
+                onSelectLink={this.handleOnSelectLink}
+                {...rest}
+              />
+            ) : (
+              <ToolbarMenu items={items} {...rest} />
+            )}
+          </FloatingToolbar>,
+          document.body
+        )}
+      </>
     );
   }
 }

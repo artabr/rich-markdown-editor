@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Portal } from "react-portal";
 import { EditorView } from "prosemirror-view";
 import useComponentSize from "../../hooks/useComponentSize";
 import useMediaQuery from "../../hooks/useMediaQuery";
@@ -7,6 +6,7 @@ import useViewportHeight from "../../hooks/useViewportHeight";
 import cx from "classnames";
 
 import css from "./FloatingToolbar.module.scss";
+import { createPortal } from "react-dom";
 
 const SSR = typeof window === "undefined";
 
@@ -164,20 +164,23 @@ function FloatingToolbarComponent(props) {
   // only render children when state is updated to visible
   // to prevent gaining input focus before calculatePosition runs
   return (
-    <Portal>
-      <div
-        className={cx(css.wrapper, { [css.active]: props.active })}
-        ref={menuRef}
-        // TODO: fix pseudo element positioning
-        // offset={position.offset}
-        style={{
-          top: `${position.top}px`,
-          left: `${position.left}px`,
-        }}
-      >
-        {position.visible && props.children}
-      </div>
-    </Portal>
+    <>
+      {createPortal(
+        <div
+          className={cx(css.wrapper, { [css.active]: props.active })}
+          ref={menuRef}
+          // TODO: fix pseudo element positioning
+          // offset={position.offset}
+          style={{
+            top: `${position.top}px`,
+            left: `${position.left}px`,
+          }}
+        >
+          {position.visible && props.children}
+        </div>,
+        document.body
+      )}
+    </>
   );
 }
 
