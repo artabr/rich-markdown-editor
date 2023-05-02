@@ -4,6 +4,7 @@ import ImageZoom from "react-medium-image-zoom";
 import { Node } from "prosemirror-model";
 import { DownloadIcon } from "outline-icons";
 
+import "react-medium-image-zoom/dist/styles.css";
 import css from "./Image.module.scss";
 
 type Props = {
@@ -25,7 +26,7 @@ export const Image: React.FC<Props> = props => {
     handleBlur,
     imageCaptionPlaceholder,
   } = props;
-  const { alt, src, title, layoutClass } = props.node.attrs;
+  const { alt, src, layoutClass } = props.node.attrs;
   const className = layoutClass ? `image image-${layoutClass}` : "image";
 
   return (
@@ -39,20 +40,9 @@ export const Image: React.FC<Props> = props => {
         <button className={css.button}>
           <DownloadIcon color="currentColor" onClick={handleDownload} />
         </button>
-        <ImageZoom
-          image={{
-            src,
-            alt,
-            title,
-          }}
-          // TODO: remove inline styles
-          defaultStyles={{
-            overlay: {
-              backgroundColor: "#FFFFFF",
-            },
-          }}
-          shouldRespectMaxDimension
-        />
+        <ImageZoom>
+          <img alt={alt} src={src} />
+        </ImageZoom>
       </span>
       <p
         className={cx(css.caption, "caption")}
