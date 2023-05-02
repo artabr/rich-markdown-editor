@@ -727,7 +727,6 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
       style,
       tooltip,
       className,
-      onKeyDown,
       dark,
     } = this.props;
     const { isRTL } = this.state;
@@ -735,12 +734,10 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
 
     return (
       <Flex
-        onKeyDown={onKeyDown}
         style={style}
         className={className}
         align="flex-start"
         justify="center"
-        dir={dir}
         column
       >
         <React.Fragment>
@@ -752,6 +749,7 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
               ["dark"]: dark,
             })}
             ref={ref => (this.element = ref)}
+            dir={dir}
           ></div>
           {!readOnly && this.view && (
             <React.Fragment>

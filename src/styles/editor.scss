@@ -1018,15 +1018,18 @@
     h5,
     h6 {
       &:not(.placeholder):before {
+        margin-left: 0;
         margin-right: -24px;
       }
     }
 
     .with-emoji {
+      margin-left: 0;
       margin-right: -1em;
     }
 
     .heading-actions {
+      margin-left: 0;
       margin-right: -26px;
       flex-direction: row-reverse;
     }
@@ -1042,19 +1045,15 @@
     }
 
     .notice-block .icon {
+      margin-right: 0;
       margin-left: 4px;
     }
 
     blockquote {
       &:before {
+        margin-left: 0;
         margin-right: -1.5em;
       }
-    }
-
-    ul,
-    ol {
-      margin: 0 -26px 0 0.1em;
-      padding: 0 44px 0 0;
     }
 
     ul.checkbox_list {
@@ -1062,6 +1061,7 @@
     }
 
     ul.checkbox_list li {
+      padding-left: 0;
       padding-right: 24px;
     }
 
@@ -1069,15 +1069,18 @@
     ol li::before {
       display: none;
       right: -40px;
+      left: auto;
     }
 
     ul > li.counter-2::before,
     ol li.counter-2::before {
       right: -50px;
+      left: auto;
     }
 
     ul.checkbox_list li::before {
       right: 0;
+      left: auto;;
     }
 
     ul.checkbox_list li input {
@@ -1090,6 +1093,7 @@
         select,
         button {
           left: 4px;
+          right: auto;
         }
       }
     }
@@ -1103,39 +1107,49 @@
       .grip-column {
         &::after {
           right: 0;
+          left: auto;
         }
 
         &.first::after {
           border-top-right-radius: 3px;
+          border-top-left-radius: 0;
         }
         &.last::after {
           border-top-left-radius: 3px;
+          border-top-right-radius: 0;
         }
       }
 
       .grip-row {
         &::after {
           right: -16px;
+          left: auto;
           border-left: 3px solid;
+          border-right-style: none;
         }
 
         &.first::after {
           border-top-right-radius: 3px;
+          border-bottom-right-radius: 0;
         }
         &.last::after {
           border-bottom-right-radius: 3px;
+          border-top-right-radius: 0;
         }
       }
 
       .grip-table {
         &::after {
           right: -18px;
+          left: auto;
         }
       }
     }
 
     .scrollable {
+      padding-left: 0;
       padding-right: 1em;
+      margin-left: 0;
       margin-right: -1em;
       border-right: 1px solid transparent;
       border-left: 1px solid transparent;
@@ -1143,11 +1157,14 @@
 
     .scrollable-shadow {
       left: -1em;
+      right: auto;
       border-right-width: 1em;
+      border-left-width: 0;
     }
 
     .block-menu-trigger {
       margin-right: -24px;
+      margin-left: 0;
     }
   }
 
