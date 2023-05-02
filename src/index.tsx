@@ -742,7 +742,10 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
       >
         <React.Fragment>
           <div
-            className={cx("editor", {
+            // TODO: remove css.editor
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            className={cx(css.editor, "editor", {
               ["rtl"]: isRTL,
               ["readOnly"]: readOnly,
               ["notReadOnlyWriteCheckboxes"]: !readOnlyWriteCheckboxes,
